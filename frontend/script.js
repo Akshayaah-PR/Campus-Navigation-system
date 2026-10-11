@@ -1,233 +1,503 @@
+// =============================================
+// NCERC CAMPUS NAVIGATION SYSTEM
+// Frontend JavaScript
+// =============================================
+
 const API_URL = "http://127.0.0.1:5000";
 
-// Get HTML elements
+
+// =============================================
+// 1. GET HTML ELEMENTS
+// =============================================
+
 const startSelect = document.getElementById("start");
-const destinationSelect = document.getElementById("destination");
-const findRouteButton = document.getElementById("findRoute");
-const swapButton = document.getElementById("swapLocations");
-const message = document.getElementById("message");
-const routeResult = document.getElementById("routeResult");
 
-const searchForm = document.getElementById("searchForm");
-const searchInput = document.getElementById("searchInput");
-const searchMessage = document.getElementById("searchMessage");
-const searchResults = document.getElementById("searchResults");
+const destinationSelect =
+    document.getElementById("destination");
 
-// Load all campus locations
+const findRouteButton =
+    document.getElementById("findRoute");
+
+const swapButton =
+    document.getElementById("swapLocations");
+
+const message =
+    document.getElementById("message");
+
+const routeResult =
+    document.getElementById("routeResult");
+
+const searchForm =
+    document.getElementById("searchForm");
+
+const searchInput =
+    document.getElementById("searchInput");
+
+const searchMessage =
+    document.getElementById("searchMessage");
+
+const searchResults =
+    document.getElementById("searchResults");
+
+
+// =============================================
+// 2. LOAD CAMPUS LOCATIONS
+// =============================================
+
 async function loadLocations() {
-try {
-const response = await fetch(`${API_URL}/locations`);
 
-```
-    if (!response.ok) {
-        throw new Error("Could not get campus locations.");
-    }
+    console.log("Connecting to the campus backend...");
 
-    const data = await response.json();
+    try {
 
-    // Backend returns an object containing a locations array
-    const locations = data.locations;
+        const response = await fetch(
+            `${API_URL}/locations`
+        );
 
-    if (!Array.isArray(locations)) {
-        throw new Error("The locations data format is incorrect.");
-    }
-
-    // Clear old options
-    startSelect.innerHTML = '<option value="">Select starting location</option>';
-    destinationSelect.innerHTML = '<option value="">Select destination</option>';
-
-    // Add locations to both dropdowns
-    locations.forEach(function (location) {
-        const option1 = document.createElement("option");
-        option1.value = location.id;
-        option1.textContent = location.name;
-        startSelect.appendChild(option1);
-
-        const option2 = document.createElement("option");
-        option2.value = location.id;
-        option2.textContent = location.name;
-        destinationSelect.appendChild(option2);
-    });
-
-    console.log("Campus locations loaded:", locations.length);
-
-} catch (error) {
-    console.error("Location loading error:", error);
-
-    startSelect.innerHTML = '<option value="">Failed to load locations</option>';
-    destinationSelect.innerHTML = '<option value="">Failed to load locations</option>';
-
-    message.textContent =
-        "Could not load locations. Check whether the backend is running.";
-}
-```
-
-}
-
-// Find the shortest route
-async function findRoute() {
-const start = startSelect.value;
-const destination = destinationSelect.value;
-
-```
-message.textContent = "";
-routeResult.innerHTML = "";
-
-if (!start || !destination) {
-    message.textContent = "Please select both starting location and destination.";
-    return;
-}
-
-if (start === destination) {
-    message.textContent = "Starting location and destination must be different.";
-    return;
-}
-
-try {
-    const url =
-        `${API_URL}/find-route?start=${encodeURIComponent(start)}` +
-        `&destination=${encodeURIComponent(destination)}`;
-
-    const response = await fetch(url);
-    const data = await response.json();
-
-    if (!response.ok || data.error) {
-        throw new Error(data.error || "Could not find a route.");
-    }
-
-    const heading = document.createElement("h3");
-    heading.textContent = "Your Route";
-    routeResult.appendChild(heading);
-
-    const list = document.createElement("ol");
-
-    // Prefer route_steps when the backend provides them
-    if (Array.isArray(data.route_steps) && data.route_steps.length > 0) {
-        data.route_steps.forEach(function (step) {
-            const item = document.createElement("li");
-
-            const name =
-                typeof step === "string"
-                    ? step
-                    : (step.name || step.id || "Campus location");
-
-            item.textContent = name;
-
-            if (typeof step === "object" && step.floor) {
-                item.textContent += ` — ${step.floor}`;
-            }
-
-            list.appendChild(item);
-        });
-    } else if (Array.isArray(data.route)) {
-        data.route.forEach(function (location) {
-            const item = document.createElement("li");
-            item.textContent =
-                typeof location === "string"
-                    ? location
-                    : (location.name || location.id || "Campus location");
-
-            list.appendChild(item);
-        });
-    } else {
-        throw new Error("The backend returned an unexpected route format.");
-    }
-
-    routeResult.appendChild(list);
-
-    if (data.total_transitions !== undefined) {
-        const total = document.createElement("p");
-        total.textContent = `Total transitions: ${data.total_transitions}`;
-        routeResult.appendChild(total);
-    }
-
-} catch (error) {
-    console.error("Route error:", error);
-    message.textContent = error.message || "Something went wrong while finding the route.";
-}
-```
-
-}
-
-// Search for a campus location
-async function searchLocations(event) {
-if (event) {
-event.preventDefault();
-}
-
-```
-const query = searchInput.value.trim();
-
-searchResults.innerHTML = "";
-searchMessage.textContent = "";
-
-if (!query) {
-    searchMessage.textContent = "Please enter a location to search.";
-    return;
-}
-
-try {
-    const response = await fetch(
-        `${API_URL}/search?q=${encodeURIComponent(query)}`
-    );
-
-    const data = await response.json();
-
-    if (!response.ok) {
-        throw new Error(data.error || "Search failed.");
-    }
-
-    const results = data.results || [];
-
-    if (results.length === 0) {
-        searchMessage.textContent = "No matching locations found.";
-        return;
-    }
-
-    results.forEach(function (location) {
-        const item = document.createElement("div");
-        item.className = "search-result-item";
-
-        const name = document.createElement("strong");
-        name.textContent = location.name;
-        item.appendChild(name);
-
-        if (location.floor) {
-            const floor = document.createElement("p");
-            floor.textContent = location.floor;
-            item.appendChild(floor);
+        if (!response.ok) {
+            throw new Error(
+                `Backend request failed: ${response.status}`
+            );
         }
 
-        item.addEventListener("click", function () {
-            startSelect.value = location.id;
-            searchMessage.textContent =
-                `Selected ${location.name} as the starting location.`;
+        const data = await response.json();
 
-            destinationSelect.focus();
+        const locations = data.locations;
+
+        if (!Array.isArray(locations)) {
+            throw new Error(
+                "The backend did not return a valid locations array."
+            );
+        }
+
+        // Reset both dropdowns
+        startSelect.innerHTML = "";
+        destinationSelect.innerHTML = "";
+
+        // Add default options
+        startSelect.add(
+            new Option("Select starting location", "")
+        );
+
+        destinationSelect.add(
+            new Option("Select destination", "")
+        );
+
+        // Add campus locations
+        locations.forEach(function (location) {
+
+            const name = location.name;
+
+            if (!name) {
+                return;
+            }
+
+            startSelect.add(
+                new Option(name, name)
+            );
+
+            destinationSelect.add(
+                new Option(name, name)
+            );
+
         });
 
-        searchResults.appendChild(item);
-    });
+        console.log(
+            "Successfully loaded locations:",
+            locations.length
+        );
 
-} catch (error) {
-    console.error("Search error:", error);
-    searchMessage.textContent =
-        "Search failed. Please check the backend and try again.";
+        message.textContent = "";
+
+    } catch (error) {
+
+        console.error(
+            "Unable to load locations:",
+            error
+        );
+
+        startSelect.innerHTML =
+            '<option value="">Unable to load locations</option>';
+
+        destinationSelect.innerHTML =
+            '<option value="">Unable to load locations</option>';
+
+        message.textContent =
+            "Cannot connect to the backend. Check the Flask terminal.";
+
+    }
+
 }
-```
+
+
+// =============================================
+// 3. FIND THE SHORTEST ROUTE
+// =============================================
+
+async function findRoute() {
+
+    const start = startSelect.value;
+
+    const destination = destinationSelect.value;
+
+    message.textContent = "";
+
+    routeResult.innerHTML = "";
+
+    // Validate the input
+    if (!start || !destination) {
+
+        message.textContent =
+            "Please select a starting location and destination.";
+
+        return;
+
+    }
+
+    if (start === destination) {
+
+        message.textContent =
+            "Please select two different locations.";
+
+        return;
+
+    }
+
+    try {
+
+        const url =
+            `${API_URL}/find-route?start=${encodeURIComponent(start)}` +
+            `&destination=${encodeURIComponent(destination)}`;
+
+        console.log("Requesting route:", url);
+
+        const response = await fetch(url);
+
+        const data = await response.json();
+
+        if (!response.ok || data.error) {
+
+            throw new Error(
+                data.error || "The route could not be found."
+            );
+
+        }
+
+        // Read the route returned by Flask
+        const steps = data.route_steps || data.route;
+
+        if (!Array.isArray(steps) || steps.length === 0) {
+
+            throw new Error(
+                "The backend did not return any route steps."
+            );
+
+        }
+
+        // Heading
+        const heading = document.createElement("h3");
+
+        heading.textContent = "Your Shortest Route";
+
+        routeResult.appendChild(heading);
+
+        // =============================================
+        // DISPLAY STEP-BY-STEP ROUTE
+        // =============================================
+
+        const routeList = document.createElement("ol");
+
+        steps.forEach(function (step, index) {
+
+            const item = document.createElement("li");
+
+            // Handle the location returned by the backend
+            if (typeof step === "string") {
+
+             item.textContent = step;
+
+            } else {
+
+                // Step heading
+                const heading = document.createElement("strong");
+
+                heading.textContent =
+                "STEP " + (index + 1) + ": " + step.name;
+
+                item.appendChild(heading);
+
+                // Navigation instruction
+                if (step.instruction) {
+
+                    const instruction = document.createElement("p");
+
+                    instruction.textContent = step.instruction;
+
+                    item.appendChild(instruction);
+
+             }
+
+                // Department information
+                if (step.department) {
+
+                    const department = document.createElement("p");
+
+                    department.textContent =
+                        "Department: " + step.department;
+
+                    item.appendChild(department);
+
+                }
+
+                // Floor information
+                if (step.floor) {
+
+                    const floor = document.createElement("p");
+
+                    floor.textContent = "Floor: " + step.floor;
+
+                    item.appendChild(floor);
+
+                }
+
+            }
+
+                routeList.appendChild(item);
+
+        });
+
+        routeResult.appendChild(routeList);
+
+        // Display transition count if provided
+        if (data.total_transitions !== undefined) {
+
+            const total = document.createElement("p");
+
+            total.textContent =
+                "Total transitions: " +
+                data.total_transitions;
+
+            routeResult.appendChild(total);
+
+        }
+
+        console.log("Route displayed successfully.");
+
+    } catch (error) {
+
+        console.error(
+            "Route finding error:",
+            error
+        );
+
+        message.textContent =
+            error.message ||
+            "An error occurred while finding the route.";
+
+    }
 
 }
 
-// Swap the starting point and destination
+
+// =============================================
+// 4. SEARCH CAMPUS LOCATIONS
+// =============================================
+
+async function searchLocations(event) {
+
+    event.preventDefault();
+
+    const query = searchInput.value.trim();
+
+    searchResults.innerHTML = "";
+
+    searchMessage.textContent = "";
+
+    if (!query) {
+
+        searchMessage.textContent =
+            "Please enter a location to search.";
+
+        return;
+
+    }
+
+    try {
+
+        const url =
+            `${API_URL}/search?q=${encodeURIComponent(query)}`;
+
+        console.log("Searching:", url);
+
+        const response = await fetch(url);
+
+        const data = await response.json();
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.error || "Search request failed."
+            );
+
+        }
+
+        const results = data.results || [];
+
+        if (results.length === 0) {
+
+            searchMessage.textContent =
+                "No matching locations found.";
+
+            return;
+
+        }
+
+        results.forEach(function (location) {
+
+            const result = document.createElement("div");
+
+            result.className = "search-result-item";
+
+            const title = document.createElement("strong");
+
+            title.textContent = location.name;
+
+            result.appendChild(title);
+
+            // Display building name when available
+            if (location.building) {
+
+                const building = document.createElement("p");
+
+                building.textContent = "Building: " + location.building;
+
+                result.appendChild(building);
+
+            }
+
+            // Display department
+            if (location.department) {
+
+                 const department = document.createElement("p");
+
+                    department.textContent =
+                        "Department: " + location.department;
+
+                    result.appendChild(department);
+
+            }
+
+            // Display floor
+            if (location.floor) {
+
+                const floor = document.createElement("p");
+
+                floor.textContent = "Floor: " + location.floor;
+
+                result.appendChild(floor);
+
+            }
+
+            // Display category
+            if (location.category) {
+
+                const category = document.createElement("p");
+
+                category.textContent = "Type: " + location.category;
+
+                result.appendChild(category);
+
+            }
+
+            // Click a result to select the starting location
+            result.addEventListener("click", function () {
+
+                const matchingOption =
+                    Array.from(startSelect.options).find(
+                        option => option.textContent === location.name
+                    );
+
+                if (matchingOption) {
+
+                    startSelect.value = matchingOption.value;
+
+                    searchMessage.textContent =
+                        location.name +
+                        " selected as the starting location.";
+
+                } else {
+
+                    searchMessage.textContent =
+                        "This result is not available in the route dropdown.";
+
+                }
+
+            });
+
+            searchResults.appendChild(result);
+
+        });
+
+        console.log(
+            "Search results:",
+            results.length
+        );
+
+    } catch (error) {
+
+        console.error(
+            "Search error:",
+            error
+        );
+
+        searchMessage.textContent =
+            error.message ||
+            "Unable to search campus locations.";
+
+    }
+
+}
+
+
+// =============================================
+// 5. SWAP LOCATIONS
+// =============================================
+
 function swapLocations() {
-const startValue = startSelect.value;
-const destinationValue = destinationSelect.value;
 
-```
-startSelect.value = destinationValue;
-destinationSelect.value = startValue;
-```
+    const startingLocation = startSelect.value;
+
+    const destinationLocation = destinationSelect.value;
+
+    startSelect.value = destinationLocation;
+
+    destinationSelect.value = startingLocation;
 
 }
 
-// Connect buttons a
+
+// =============================================
+// 6. CONNECT BUTTONS
+// =============================================
+
+findRouteButton.addEventListener(
+    "click",
+    findRoute
+);
+
+swapButton.addEventListener(
+    "click",
+    swapLocations
+);
+
+searchForm.addEventListener(
+    "submit",
+    searchLocations
+);
+
+
+// =============================================
+// 7. START THE APPLICATION
+// =============================================
+
+loadLocations();

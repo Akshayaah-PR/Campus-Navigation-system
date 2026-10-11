@@ -458,19 +458,35 @@ def connect_locations(location_a, location_b, weight=1):
 # Verify these connections at the actual campus before relying on them.
 
 connect_locations("Main Gate", "Bhaskara Block")
-connect_locations("Bhaskara Block", "Aryabhatta Block")
-connect_locations("Main Gate", "Nala Canteen")
+connect_locations("Bhaskara Block", "Nala Canteen")
+connect_locations("Nala Canteen", "Aryabhatta Block")
 
 
 # ------------------------------------------------------------
 # 9B. Central staircase and floor landings
 # ------------------------------------------------------------
 
+# ------------------------------------------------------------
+# 9B. Central staircase and floor landings
+# ------------------------------------------------------------
+
+# The entrance to Aryabhatta Block leads to the ground floor.
+connect_locations(
+    "Aryabhatta Block",
+    landing_names[0]
+)
+
+# Each floor landing connects to the central staircase.
+# The staircase provides access between floors.
+
 for floor_number in range(5):
+
     landing = landing_names[floor_number]
 
-    connect_locations("Aryabhatta Block", landing)
-    connect_locations(landing, "Aryabhatta Central Staircase")
+    connect_locations(
+        landing,
+        "Aryabhatta Central Staircase"
+    )
 
 
 # ------------------------------------------------------------
