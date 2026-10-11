@@ -1,0 +1,655 @@
+/* =========================================
+
+1. GLOBAL SETTINGS
+   ========================================= */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  }
+
+html {
+scroll-behavior: smooth;
+}
+
+body {
+font-family: Arial, Helvetica, sans-serif;
+background: #f3f6fb;
+color: #24344d;
+line-height: 1.6;
+text-align: center;
+}
+
+button,
+input,
+select {
+font: inherit;
+}
+
+button,
+a,
+select {
+-webkit-tap-highlight-color: transparent;
+}
+
+/* =========================================
+2. HEADER
+========================================= */
+
+.header {
+background: linear-gradient(135deg, #102b50, #1769aa);
+color: white;
+padding: 55px 20px;
+}
+
+.header-content {
+max-width: 900px;
+margin: auto;
+}
+
+.logo {
+display: inline-block;
+padding: 8px 20px;
+margin-bottom: 18px;
+border: 2px solid rgba(255, 255, 255, 0.7);
+border-radius: 10px;
+font-size: 20px;
+font-weight: bold;
+letter-spacing: 3px;
+}
+
+.header h1 {
+font-size: 38px;
+line-height: 1.3;
+margin-bottom: 12px;
+}
+
+.header p {
+color: #e1edff;
+font-size: 17px;
+}
+
+.status-badge {
+display: inline-block;
+margin-top: 22px;
+padding: 7px 15px;
+border-radius: 25px;
+background: rgba(255, 255, 255, 0.14);
+color: white;
+font-size: 13px;
+}
+
+/* =========================================
+3. MAIN CONTAINER
+========================================= */
+
+.container {
+width: 92%;
+max-width: 850px;
+margin: 0 auto;
+padding: 35px 0;
+}
+
+/* =========================================
+4. WELCOME SECTION
+========================================= */
+
+.welcome-section {
+margin-bottom: 30px;
+}
+
+.section-label {
+color: #1769aa;
+font-size: 13px;
+font-weight: bold;
+letter-spacing: 2px;
+margin-bottom: 10px;
+}
+
+.welcome-section h2 {
+color: #102b50;
+font-size: 30px;
+margin-bottom: 10px;
+}
+
+.welcome-section p:not(.section-label) {
+color: #64748b;
+font-size: 16px;
+}
+
+/* =========================================
+5. CARDS
+========================================= */
+
+.card {
+background: white;
+padding: 30px;
+margin-bottom: 25px;
+border-radius: 16px;
+box-shadow: 0 6px 25px rgba(16, 43, 80, 0.07);
+border: 1px solid #e7edf5;
+}
+
+.card-heading {
+display: flex;
+justify-content: space-between;
+align-items: center;
+gap: 15px;
+margin-bottom: 25px;
+}
+
+.card-heading h2 {
+color: #102b50;
+font-size: 23px;
+margin-bottom: 5px;
+}
+
+.card-heading p {
+color: #64748b;
+font-size: 14px;
+}
+
+.heading-icon {
+min-width: 48px;
+height: 48px;
+display: flex;
+justify-content: center;
+align-items: center;
+background: #eaf3ff;
+border-radius: 12px;
+font-size: 23px;
+}
+
+/* =========================================
+6. FORM ELEMENTS
+========================================= */
+
+.form-group {
+margin-bottom: 20px;
+text-align: left;
+}
+
+.form-group label,
+.search-form label {
+display: block;
+color: #24344d;
+font-weight: bold;
+margin-bottom: 9px;
+}
+
+.form-group select {
+width: 100%;
+padding: 14px;
+border: 1px solid #ccd7e5;
+border-radius: 9px;
+background: #fff;
+color: #24344d;
+outline: none;
+cursor: pointer;
+}
+
+.form-group select:focus,
+.search-form input:focus {
+border-color: #1769aa;
+box-shadow: 0 0 0 3px rgba(23, 105, 170, 0.12);
+}
+
+/* =========================================
+7. SWAP LOCATIONS BUTTON
+========================================= */
+
+.swap-container {
+display: flex;
+justify-content: center;
+margin-top: -10px;
+margin-bottom: 18px;
+}
+
+.swap-button {
+background: #eaf3ff;
+color: #1769aa;
+border: 1px solid #d6e7fb;
+border-radius: 25px;
+padding: 7px 16px;
+font-size: 13px;
+font-weight: bold;
+cursor: pointer;
+}
+
+.swap-button:hover {
+background: #d9eaff;
+}
+
+/* =========================================
+8. PRIMARY BUTTON
+========================================= */
+
+.primary-button {
+width: 100%;
+display: flex;
+justify-content: center;
+align-items: center;
+gap: 12px;
+padding: 15px;
+background: #1769aa;
+color: white;
+border: none;
+border-radius: 9px;
+font-size: 16px;
+font-weight: bold;
+cursor: pointer;
+transition: background 0.2s, transform 0.2s;
+}
+
+.primary-button:hover {
+background: #104d80;
+transform: translateY(-1px);
+}
+
+.primary-button:disabled {
+opacity: 0.65;
+cursor: not-allowed;
+transform: none;
+}
+
+/* =========================================
+9. STATUS MESSAGE
+========================================= */
+
+#message {
+margin-top: 18px;
+color: #64748b;
+font-size: 14px;
+overflow-wrap: anywhere;
+}
+
+#message.success {
+color: #15803d;
+}
+
+#message.error {
+color: #b91c1c;
+}
+
+/* =========================================
+10. ROUTE RESULTS
+========================================= */
+
+#routeResult {
+margin-top: 25px;
+text-align: left;
+}
+
+.route-summary {
+padding: 20px;
+margin-bottom: 20px;
+background: #eaf3ff;
+border: 1px solid #d4e6fb;
+border-radius: 12px;
+text-align: center;
+}
+
+.route-summary h3 {
+color: #102b50;
+margin-bottom: 8px;
+}
+
+.route-summary p {
+color: #405775;
+font-size: 14px;
+}
+
+.route-title {
+color: #102b50;
+text-align: center;
+margin-bottom: 20px;
+font-size: 21px;
+}
+
+.route-list {
+list-style: none;
+padding: 0;
+counter-reset: route-step;
+}
+
+.route-list li {
+position: relative;
+margin-bottom: 12px;
+padding: 16px 16px 16px 58px;
+background: #f8faff;
+border: 1px solid #e0eaf5;
+border-radius: 10px;
+overflow-wrap: anywhere;
+}
+
+.route-list li::before {
+counter-increment: route-step;
+content: counter(route-step);
+position: absolute;
+left: 15px;
+top: 50%;
+transform: translateY(-50%);
+display: flex;
+align-items: center;
+justify-content: center;
+width: 29px;
+height: 29px;
+border-radius: 50%;
+background: #1769aa;
+color: white;
+font-weight: bold;
+font-size: 13px;
+}
+
+.route-location-name {
+display: block;
+color: #102b50;
+font-weight: bold;
+}
+
+.route-location-details {
+display: block;
+margin-top: 4px;
+color: #64748b;
+font-size: 13px;
+}
+
+.route-note {
+display: block;
+margin-top: 5px;
+color: #405775;
+font-size: 13px;
+}
+
+.route-total {
+text-align: center;
+margin-top: 18px;
+padding: 15px;
+background: #f0fdf4;
+color: #166534;
+border-radius: 9px;
+font-weight: bold;
+}
+
+.route-disclaimer {
+margin-top: 12px;
+text-align: center;
+color: #64748b;
+font-size: 12px;
+}
+
+/* =========================================
+11. LOCATION SEARCH
+========================================= */
+
+.search-form {
+text-align: left;
+}
+
+.search-input-group {
+display: flex;
+gap: 10px;
+}
+
+.search-form input {
+width: 100%;
+min-width: 0;
+padding: 13px;
+border: 1px solid #ccd7e5;
+border-radius: 9px;
+outline: none;
+}
+
+.search-form button {
+padding: 12px 22px;
+background: #1769aa;
+color: white;
+border: none;
+border-radius: 9px;
+font-weight: bold;
+cursor: pointer;
+}
+
+.search-form button:hover {
+background: #104d80;
+}
+
+#searchMessage {
+margin-top: 15px;
+color: #64748b;
+font-size: 14px;
+overflow-wrap: anywhere;
+}
+
+#searchResults {
+margin-top: 18px;
+text-align: left;
+}
+
+.search-result-item {
+display: flex;
+justify-content: space-between;
+align-items: center;
+gap: 15px;
+padding: 15px;
+margin-bottom: 10px;
+background: #f8faff;
+border: 1px solid #e0eaf5;
+border-radius: 10px;
+}
+
+.search-result-info {
+min-width: 0;
+overflow-wrap: anywhere;
+}
+
+.search-result-info h3 {
+color: #102b50;
+font-size: 15px;
+}
+
+.search-result-info p {
+margin-top: 4px;
+color: #64748b;
+font-size: 13px;
+}
+
+.use-location-button {
+flex-shrink: 0;
+padding: 9px 13px;
+background: #eaf3ff;
+color: #1769aa;
+border: 1px solid #d6e7fb;
+border-radius: 7px;
+font-weight: bold;
+font-size: 12px;
+cursor: pointer;
+}
+
+.use-location-button:hover {
+background: #d9eaff;
+}
+
+/* =========================================
+12. VIRTUAL CAMPUS TOUR
+========================================= */
+
+.tour-card {
+text-align: center;
+}
+
+.tour-icon {
+font-size: 40px;
+margin-bottom: 12px;
+}
+
+.tour-card h2 {
+color: #102b50;
+font-size: 23px;
+margin-bottom: 10px;
+}
+
+.tour-card p {
+color: #64748b;
+margin-bottom: 22px;
+}
+
+.tour-button {
+display: inline-block;
+max-width: 100%;
+padding: 13px 24px;
+background: #1769aa;
+color: white;
+border-radius: 9px;
+text-decoration: none;
+font-weight: bold;
+overflow-wrap: anywhere;
+}
+
+.tour-button:hover {
+background: #104d80;
+}
+
+/* =========================================
+13. INFORMATION SECTION
+========================================= */
+
+.information-section {
+margin-top: 40px;
+margin-bottom: 25px;
+}
+
+.information-section > h2 {
+color: #102b50;
+font-size: 25px;
+margin-bottom: 22px;
+}
+
+.information-grid {
+display: grid;
+grid-template-columns: repeat(3, 1fr);
+gap: 15px;
+}
+
+.information-item {
+background: white;
+border: 1px solid #e7edf5;
+border-radius: 12px;
+padding: 22px 15px;
+box-shadow: 0 4px 15px rgba(16, 43, 80, 0.04);
+}
+
+.information-item span {
+font-size: 28px;
+}
+
+.information-item h3 {
+margin-top: 12px;
+margin-bottom: 8px;
+color: #102b50;
+font-size: 15px;
+}
+
+.information-item p {
+color: #64748b;
+font-size: 13px;
+}
+
+.disclaimer {
+margin-top: 22px;
+color: #64748b;
+font-size: 12px;
+}
+
+/* =========================================
+14. FOOTER
+========================================= */
+
+.footer {
+margin-top: 35px;
+padding: 28px 20px;
+background: #102b50;
+color: white;
+}
+
+.footer h3 {
+margin-bottom: 6px;
+font-size: 17px;
+}
+
+.footer p {
+color: #dbeafe;
+font-size: 13px;
+}
+
+/* =========================================
+15. RESPONSIVE DESIGN
+========================================= */
+
+@media (max-width: 650px) {
+
+```
+.header {
+    padding: 40px 16px;
+}
+
+.header h1 {
+    font-size: 28px;
+}
+
+.header p {
+    font-size: 15px;
+}
+
+.container {
+    width: 94%;
+    padding-top: 25px;
+}
+
+.welcome-section h2 {
+    font-size: 25px;
+}
+
+.card {
+    padding: 21px 17px;
+    border-radius: 12px;
+}
+
+.card-heading h2 {
+    font-size: 20px;
+}
+
+.heading-icon {
+    min-width: 40px;
+    height: 40px;
+    font-size: 19px;
+}
+
+.search-input-group {
+    flex-direction: column;
+}
+
+.search-form button {
+    width: 100%;
+}
+
+.information-grid {
+    grid-template-columns: 1fr;
+}
+
+.search-result-item {
+    align-items: flex-start;
+    flex-direction: column;
+}
+
+.use-location-button {
+    width: 100%;
+}
+
+.route-list li {
+    padding-right: 12px;
+}
+```
+
+}

@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+```
+<title>NCERC Campus Navigation System</title>
+
+<link rel="stylesheet" href="style.css">
+```
+
+</head>
+
+<body>
+
+```
+<!-- Header -->
+<header class="header">
+    <div class="header-content">
+
+        <div class="logo">NCERC</div>
+
+        <h1>Campus Navigation System</h1>
+
+        <p>Find your destination. Explore your campus.</p>
+
+        <span class="status-badge">
+            ● Graph-Based Navigation
+        </span>
+
+    </div>
+</header>
+
+
+<main class="container">
+
+    <!-- Welcome Section -->
+    <section class="welcome-section">
+
+        <p class="section-label">WELCOME TO NCERC</p>
+
+        <h2>Where would you like to go?</h2>
+
+        <p>
+            Find classrooms, laboratories, departments,
+            offices, and other campus facilities.
+        </p>
+
+    </section>
+
+
+    <!-- Navigation Card -->
+    <section class="card navigation-card">
+
+        <div class="card-heading">
+
+            <div>
+                <h2>Plan Your Route</h2>
+
+                <p>
+                    Select your starting point and destination.
+                </p>
+            </div>
+
+            <div class="heading-icon">🧭</div>
+
+        </div>
+
+
+        <!-- Starting Location -->
+        <div class="form-group">
+
+            <label for="start">Starting Location</label>
+
+            <select id="start">
+                <option value="">Loading locations...</option>
+            </select>
+
+        </div>
+
+
+        <!-- Swap Button -->
+        <div class="swap-container">
+
+            <button
+                type="button"
+                id="swapLocations"
+                class="swap-button"
+                aria-label="Swap starting location and destination"
+                title="Swap locations"
+            >
+                ⇅ Swap Locations
+            </button>
+
+        </div>
+
+
+        <!-- Destination -->
+        <div class="form-group">
+
+            <label for="destination">Destination</label>
+
+            <select id="destination">
+                <option value="">Loading locations...</option>
+            </select>
+
+        </div>
+
+
+        <!-- Find Route -->
+        <button type="button" id="findRoute" class="primary-button">
+
+            <span>Find Shortest Route</span>
+
+            <span aria-hidden="true">→</span>
+
+        </button>
+
+
+        <!-- Status Message -->
+        <div id="message" role="status" aria-live="polite">
+            Connecting to the campus navigation system...
+        </div>
+
+
+        <!-- Route Results -->
+        <div id="routeResult"></div>
+
+    </section>
+
+
+    <!-- Location Search -->
+    <section class="card search-card">
+
+        <div class="card-heading">
+
+            <div>
+                <h2>Search Campus Locations</h2>
+
+                <p>
+                    Search for a department, classroom, laboratory,
+                    floor, or facility.
+                </p>
+            </div>
+
+            <div class="heading-icon">🔎</div>
+
+        </div>
+
+
+        <form id="searchForm" class="search-form">
+
+            <label for="searchInput">
+                What are you looking for?
+            </label>
+
+            <div class="search-input-group">
+
+                <input
+                    type="search"
+                    id="searchInput"
+                    placeholder="Example: Mechanical, Room 226, CSE..."
+                    autocomplete="off"
+                >
+
+                <button type="submit" id="searchButton">
+                    Search
+                </button>
+
+            </div>
+
+        </form>
+
+
+        <div id="searchMessage" role="status" aria-live="polite"></div>
+
+        <div id="searchResults"></div>
+
+    </section>
+
+
+    <!-- Virtual Campus Tour -->
+    <section class="card tour-card">
+
+        <div class="tour-icon">🏫</div>
+
+        <h2>Explore the NCERC Campus</h2>
+
+        <p>
+            Discover the campus through the official
+            360-degree virtual tour.
+        </p>
+
+        <a
+            href="https://ncerc.ac.in/360/"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="tour-button"
+        >
+            Explore 360° Campus Tour ↗
+        </a>
+
+    </section>
+
+
+    <!-- Information -->
+    <section class="information-section">
+
+        <h2>How Navigation Works</h2>
+
+        <div class="information-grid">
+
+            <div class="information-item">
+                <span>📍</span>
+                <h3>Select Locations</h3>
+                <p>Choose your starting point and destination.</p>
+            </div>
+
+            <div class="information-item">
+                <span>🧠</span>
+                <h3>Find the Shortest Route</h3>
+                <p>Dijkstra's algorithm calculates a route through the campus graph.</p>
+            </div>
+
+            <div class="information-item">
+                <span>🪜</span>
+                <h3>Follow the Steps</h3>
+                <p>Follow the displayed sequence of locations and floor information.</p>
+            </div>
+
+        </div>
+
+        <p class="disclaimer">
+            Academic project demonstration. Routes represent logical
+            graph connections, not GPS navigation or measured walking distances.
+            Verify physical directions on campus.
+        </p>
+
+    </section>
+
+</main>
+
+
+<!-- Footer -->
+<footer class="footer">
+
+    <h3>NCERC Campus Navigation System</h3>
+
+    <p>Academic Project | Graph Algorithms | Dijkstra's Algorithm</p>
+
+</footer>
+
+
+<!-- JavaScript -->
+<script src="script.js"></script>
+```
+
+</body>
+
+</html>
